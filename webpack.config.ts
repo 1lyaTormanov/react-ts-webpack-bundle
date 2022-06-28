@@ -1,15 +1,16 @@
-const path = require('path')
-
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // сборка приложения в определенный html эндпоинт
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');// чистит output папку после каждого билда
+import * as path from 'path';
+import * as webpack from "webpack";
+import  {isDev, getFilename} from "./wepback_utils/utils";
+import {getStyleRules, getJsLoaders, getBabelConfig} from "./wepback_utils/rules";
+import {getOptimizations, getPlugins} from './wepback_utils/plugins'
+import * as devServer from 'webpack-dev-server'
+// import HtmlWebpackPlugin from 'html-webpack-plugin'; // сборка приложения в определенный html эндпоинт
+// import {CleanWebpackPlugin} from 'clean-webpack-plugin' // чистит output папку после каждого билда
 // const ForkTsCheckerWebpackPlugin = require( 'fork-ts-checker-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin'); // позволяет копировать статические файлы
 // const CssExtract = require('mini-css-extract-plugin');// CssExtract - минимизирует css
-const {isDev, getFilename, ignoreDepsPath} = require("./wepback_utils/utils");
-const {getStyleRules, getJsLoaders, getBabelConfig} = require("./wepback_utils/rules");
-const {getOptimizations, getPlugins} = require('./wepback_utils/plugins')
 
-module.exports = {
+const config: webpack.Configuration & { devServer: devServer.Configuration } = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
@@ -76,3 +77,5 @@ module.exports = {
         ]
     }
 }
+
+export default config;
